@@ -22,7 +22,7 @@ class Text(BaseModel):
 
 @app.get('/')
 def index():
-  return RedirectResponse(url='/docs')
+  return RedirectResponse(url='/app')
 
 @app.get('/app')
 def application():
