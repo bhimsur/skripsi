@@ -1,28 +1,11 @@
-# skripsi
+# Penelitian kolaborasi Universitas Negeri Malang dan Universitas Islam Negeri Maulana Malik Ibrahim Malang
+Tim Penelitian
+> Aji Prasetya Wibawa, S.T., M.M.T., Ph.D.
+> Dr. Fachrul Kurniawan M.MT.
+> Dr. H. Badruddin, M.HI.
 
-To activate this project's virtualenv, run pipenv shell.
-Alternatively, run a command inside the virtualenv with pipenv run.
-
-Create a new project using Python 3.7, specifically:
-   $ pipenv --python 3.7
-
-   Remove project virtualenv (inferred from current directory):
-   $ pipenv --rm
-
-   Install all dependencies for a project (including dev):
-   $ pipenv install --dev
-
-   Create a lockfile containing pre-releases:
-   $ pipenv lock --pre
-
-   Show a graph of your installed dependencies:
-   $ pipenv graph
-
-   Check your installed dependencies for security vulnerabilities:
-   $ pipenv check
-
-   Install a local setup.py into your virtual environment/Pipfile:
-   $ pipenv install -e .
-
-   Use a lower-level pip command:
-   $ pipenv run pip freeze
+> Bhimantoro Suryo Admodjo
+> Aji Purbo Cahyo
+> Annas Putra Anuraga
+> Bakhtiar Rosyad
+> Faiz Mohammad Ridho
