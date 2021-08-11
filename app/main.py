@@ -1,12 +1,14 @@
-from starlette.responses import RedirectResponse
+from starlette.responses import FileResponse, RedirectResponse
 from pydantic import BaseModel
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 import joblib
 # import keras
 # from keras.preprocessing.sequence import pad_sequences
 
 
 app = FastAPI()
+app.mount('/public', StaticFiles(directory='public'), name='public')
 
 # cnn_model = keras.models.load_model('model/cnn_final.h5')
 tfidf_model = joblib.load('model/tfidf_final.pkl')
@@ -21,6 +23,10 @@ class Text(BaseModel):
 @app.get('/')
 def index():
   return RedirectResponse(url='/docs')
+
+@app.get('/app')
+def application():
+  return FileResponse('public/index.html')
 
 @app.post('/predict')
 def predict(data: Text):
