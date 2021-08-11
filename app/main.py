@@ -13,6 +13,7 @@ app = FastAPI()
 tfidf_model = joblib.load('model/tfidf_final.pkl')
 rf_model = joblib.load('model/rf_final.pkl')
 svm_model = joblib.load('model/svm_final.pkl')
+tokenizer_model = joblib.load('model/tokenizer.pkl')
 
 class Text(BaseModel):
   method: str
