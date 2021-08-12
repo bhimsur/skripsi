@@ -48,8 +48,10 @@
           <p><b> Metode: </b>
             <span v-if="payload.method == 'svm'">Support Vector Machine</span>
             <span v-else-if="payload.method == 'rf'">Random Forest</span>
-            <span v-else-if="payload.method == 'bnb'">Bernoulli NB</span>
-            <span v-else-if="payload.method == 'mnb'">Multinomial NB</span>
+            <span v-else-if="payload.method == 'bnb'">Bernoulli Naive Bayes</span>
+            <span v-else-if="payload.method == 'mnb'">Multinomial Naive Bayes</span>
+            <span v-else-if="payload.method == 'lstm'">Long-Short Term Memory</span>
+            <span v-else-if="payload.method == 'cnn'">Convolutional Neural Network</span>
           </p>
           <div v-if="sentiment">
             <h3>Sentiment</h3>
@@ -76,7 +78,7 @@
           sidebar: false,
           predictors: [
             { name: 'text', value: '', type: 'str' },
-            { name: 'method', value: '', type: 'dropdown', items: ['svm', 'rf', 'bnb', 'mnb'] }
+            { name: 'method', value: '', type: 'dropdown', items: ['bnb', 'mnb', 'svm', 'rf', 'cnn', 'lstm'] }
           ],
           sentiment: null
         }
