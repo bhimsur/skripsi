@@ -14,6 +14,8 @@ app.mount('/public', StaticFiles(directory='public'), name='public')
 tfidf_model = joblib.load('model/tfidf_final.pkl')
 rf_model = joblib.load('model/rf_final.pkl')
 svm_model = joblib.load('model/svm_final.pkl')
+bnb_model = joblib.load('model/bnb_final.pkl')
+mnb_model = joblib.load('model/mnb_final.pkl')
 # tokenizer_model = joblib.load('model/tokenizer.pkl')
 
 class Text(BaseModel):
@@ -35,6 +37,10 @@ def predict(data: Text):
     res = rf_model.predict_proba(tfidf_transform)[0]
   elif data.method == 'svm':
     res = svm_model.predict_proba(tfidf_transform)[0]
+  elif data.method == 'bnb':
+    res = bnb_model.predict_proba(tfidf_transform)[0]
+  elif data.method == 'mnb':
+    res = mnb_model.predict_proba(tfidf_transform)[0]
   else:
     return {"status":False, "message":"method not allowed"}
   return {
