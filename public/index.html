@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+</head>
+
+<body>
+  <div id="app">
+    <v-app>
+      <v-app-bar app dense dark color='green darken-4'>
+        <v-app-bar-title>{{ app_title }}</v-app-bar-title>
+      </v-app-bar>
+      <v-main>
+        <v-navigation-drawer right absolute width='350px'>
+          <v-list>
+            <v-subheader>
+              User Input
+            </v-subheader>
+          </v-list>
+
+          <v-divider></v-divider>
+
+          <v-list class="mt-3 px-3">
+            <v-list-item v-for="p in predictors" :key="p.name">
+              <v-select v-if="p.type === 'dropdown'" dense :label="p.name.toUpperCase()" v-model="p.value" outlined :items="p.items"
+                item-text="name" item-value="value"></v-select>
+              <v-textarea v-if="p.type === 'str'" dense :label="p.name.toUpperCase()" v-model="p.value" outlined clearable>
+              </v-textarea>
+            </v-list-item>
+          </v-list>
+          <v-divider class="mt-6"></v-divider>
+          <v-list>
+            <v-list-item>
+              <v-btn text rounded class="mr-3" @click="predict" color="green darken-4" dark>Predict</v-btn>
+              <v-spacer></v-spacer>
+              <v-btn text rounded class="mr-3" @click="reset" color="red darken-4" dark>Reset</v-btn>
+            </v-list-item>
+          </v-list>
+        </v-navigation-drawer>
+        <v-navigation-drawer v-model="sidebar" absolute left></v-navigation-drawer>
+        <v-container class="shifted">
+          <h1 class="mb-6">Halo World!</h1>
+          <p><b>Input Teks: </b>{{ payload.text }}</p>
+          <p><b> Metode: </b>
+            <span v-if="payload.method == 'svm'">Support Vector Machine</span>
+            <span v-else-if="payload.method == 'rf'">Random Forest</span>
+            <span v-else-if="payload.method == 'bnb'">Bernoulli NB</span>
+            <span v-else-if="payload.method == 'mnb'">Multinomial NB</span>
+          </p>
+          <div v-if="sentiment">
+            <h3>Sentiment</h3>
+            <p><span :class="{positif: sentiment === 'positif', negatif: sentiment === 'negatif'}">{{ sentiment
+                }}</span></p>
+          </div>
+        </v-container>
+      </v-main>
+    </v-app>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    function capitalizeFirstLetter(string) {
+      return string[0].toUpperCase() + string.slice(1);
+    }
+    new Vue({
+      el: '#app',
+      vuetify: new Vuetify(),
+      data: function () {
+        return {
+          app_title: 'Islamofobia Sentiment Analysis Application',
+          sidebar: false,
+          predictors: [
+            { name: 'text', value: '', type: 'str' },
+            { name: 'method', value: '', type: 'dropdown', items: ['svm', 'rf', 'bnb', 'mnb'] }
+          ],
+          sentiment: null
+        }
+      },
+      computed: {
+        payload: function () {
+          return this.predictors.reduce((acc, cur) => ({ ...acc, [cur.name]: cur.value }), {})
+        }
+      },
+      methods: {
+        predict: function () {
+          axios.post('/predict', this.payload)
+            .then(response => response.data)
+            .then(data => {
+              this.sentiment = data.prediction
+            })
+            .catch(e => console.log(e))
+        },
+        reset: function () {
+          this.sentiment = null          
+        }
+      },
+      mounted: function () {
+        document.title = this.app_title
+      }
+    })
+  </script>
+  <style>
+    .shifted {
+      margin-right: 400px;
+      max-width: calc(100vw - 450px);
+    }
+
+    .positif {
+      color: green
+    }
+
+    .negatif {
+      color: red
+    }
+  </style>
+</body>
+
+</html>
