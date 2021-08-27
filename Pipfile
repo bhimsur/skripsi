@@ -8,8 +8,6 @@ fastapi = {extras = ["all"], version = "*"}
 scikit-learn = "*"
 joblib = "*"
 aiofiles = "*"
-keras = "*"
-tensorflow = "*"
 
 [dev-packages]
 
