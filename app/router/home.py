@@ -12,3 +12,8 @@ def index():
 @router.get("/app", tags=["Home"])
 def application():
     return FileResponse("app/public/index.html")
+
+
+@router.get("/hello", tags=["Home"])
+def hello_world():
+    return "hello world"
